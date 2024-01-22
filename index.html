@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>MIT3DVisit</title>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+  <link rel="stylesheet" href="style.css" id="style-sheet">
+  <link rel="stylesheet" type="text/css" href="settings.css" />
+
+  <!-- Insert this line above script imports  -->
+  <script>
+    if (typeof module === "object") {
+      window.module = module;
+      module = undefined;
+    }
+  </script>
+
+  <script src="resources/panotemplate/jquery.js"></script>
+  <script src="resources/panotemplate/imagedata.js"></script>
+  <script src="jquery-ui.js"></script>
+
+  <!-- Insert this line after script imports -->
+  <script>
+    if (window.module)
+      module = window.module;
+  </script>
+
+  <script>
+    var projectext = ".wtm";
+    const { dialog, BrowserWindow } = require("electron").remote;
+    const { ipcRenderer } = require("electron");
+    const fs = require("fs");
+    const fse = require("fs-extra");
+    
+  </script>
+
+ 
+
+</head>
+
+<body style="display: none">
+  
+  <div id="appbar">
+    <!-- <a href="https://www.mitmynid.com/"></a>
+    <div style="
+                                -webkit-app-region: no-drag;
+                                cursor: pointer;
+                                background-color: lightblue;
+                                color: white;
+                                padding: 10px;
+                                display: inline-block;
+                                font-weight: bold;
+                              ">
+      MITMYNID
+    </div> -->
+    </a>
+    <div class="abitem">
+      <span data-i18n="file"></span>
+      <div class="dropdown-content">
+        <div class="subabitem" onclick="showpageAndReload('projects')">
+          <div style="display: inline-block; width: 190px">
+            <i class="fa fa-briefcase" style="width: 30px"></i>
+            <span data-i18n="visits"></span>
+          </div>
+          <div style="display: inline-block; color: gray">Ctrl+P</div>
+        </div>
+        <div class="subabitem" onclick="openproject();">
+          <div style="display: inline-block; width: 190px">
+            <i class="fa fa-folder" style="width: 30px"></i>
+            <span data-i18n="open_existing_visit"></span>
+          </div>
+          <div style="display: inline-block; color: gray">Ctrl+O</div>
+        </div>
+        <div class="subabitem" onclick="reloadApp();">
+          <div style="display: inline-block; width: 190px">
+            <i class="fa fa-refresh" style="width: 30px"></i>
+            <span data-i18n="reload_app"></span>
+          </div>
+          <div style="display: inline-block; color: gray">Ctrl+R</div>
+        </div>
+        <div class="subabitem" onclick="quitprogram();">
+          <div style="display: inline-block; width: 190px">
+            <i class="fa fa-times" style="width: 30px"></i>
+            <span data-i18n="quit"></span>
+          </div>
+          <div style="display: inline-block; color: gray">Ctrl+Q</div>
+        </div>
+      </div>
+    </div>
+    <div class="abitem">
+      <span data-i18n="help"></span>
+      <div class="dropdown-content">
+        <div class="subabitem" onclick="showpage('tutorials')">
+          <div style="display: inline-block; width: 190px">
+            <i class="fa fa-book" style="width: 30px"></i>
+            <span data-i18n="tutorial"></span>
+          </div>
+          <div style="display: inline-block; color: gray">Ctrl+T</div>
+        </div>
+        <div class="subabitem" onclick="showMiniPage('about')">
+          <div style="display: inline-block; width: 190px">
+            <i class="fa fa-question" style="width: 30px"></i>
+            <span data-i18n="about"></span>
+          </div>
+          <div style="display: inline-block; color: gray">Ctrl+B</div>
+        </div>
+      </div>
+    </div>
+    <div class="abitem">
+      <span data-i18n="settings"></span>
+      <div class="dropdown-content">
+        <div class="subabitem" onclick="showpage('settingsGeral')">
+          <div style="display: inline-block; width: 190px">
+            <i class="fa fa-book" style="width: 30px"></i>
+            <span data-i18n="configuration"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="float: right">
+      <div class="abitem rightbtn minimizebutton" onclick="minimize()" style="width: 30px; text-align: center">
+        <i class="fa fa-window-minimize"></i>
+      </div>
+      <div class="abitem rightbtn minmaxbutton" onclick="maximize()" style="width: 30px; text-align: center">
+        <i class="fa fa-window-restore"></i>
+      </div>
+      <div class="abitem rightbtn closebutton" onclick="quitprogram()" style="width: 30px; text-align: center">
+        <i class="fa fa-times"></i>
+      </div>
+    </div>
+</body>
+
+</html>
+
+
+
+
+</div>
+
+
+<!-- Tutorials -->
+<div class="page" id="tutorials">
+  <h1 data-i18n="tutorial"></h1>
+  <div style="display: table; width: 100%; table-layout: fixed">
+    <div style="display: table-cell; vertical-align: top; padding-right: 40px">
+      <h2 data-i18n="create new visit"></h2>
+      <p data-i18n="tutorial.1paragraph"></p>
+      <p data-i18n="tutorial.2paragraph"></p>
+      <p data-i18n="tutorial.3paragraph"></p>
+      <p data-i18n="tutorial.4paragraph"></p>
+      <h2 data-i18n="open.existing.project"></h2>
+      <p data-i18n="tutorial.5paragraph"></p>
+      <p data-i18n="tutorial.6paragraph"></p>
+      <h2 data-i18n="remove.project"></h2>
+      <p data-i18n="tutorial.7paragraph"></p>
+      <h2 data-i18n="working.project"></h2>
+      <p data-i18n="tutorial.8paragraph"></p>
+      <p data-i18n="tutorial.9paragraph"></p>
+      <p data-i18n="tutorial.10paragraph"></p>
+      <h2 data-i18n="panorama"></h2>
+      <p data-i18n="tutorial.11paragraph"></p>
+      <p data-i18n="tutorial.12paragraph"></p>
+      <p data-i18n="tutorial.13paragraph"></p>
+      <p data-i18n="tutorial.14paragraph"></p>
+      <h2 data-i18n="hotspots"></h2>
+      <p data-i18n="tutorial.15paragraph"></p>
+      <p data-i18n="tutorial.16paragraph"></p>
+      <p data-i18n="tutorial.17paragraph"></p>
+      <p data-i18n="tutorial.18paragraph"></p>
+      <p data-i18n="tutorial.19paragraph"></p>
+      <h2 data-i18n="add.image"></h2>
+      <p data-i18n="tutorial.20paragraph"></p>
+      <p data-i18n="tutorial.21paragraph"></p>
+      <h2 data-i18n="tutorial.configuration"></h2>
+      <p data-i18n="tutorial.22paragraph"></p>
+      <h2 data-i18n="publish"></h2>
+      <p data-i18n="tutorial.23paragraph"></p>
+      <p data-i18n="tutorial.24paragraph"></p>
+      <a href="https://www.mitmynid.com/"> Mitmynid</a>.
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Settings -->
+<div class="page" id="settingsGeral">
+  <h2 data-i18n="configuration"></h2>
+  <h3 data-i18n="geral"></h3>
+  <label for="projectpath" data-i18n="projectpath"></label>
+  <input type="text" id="projectpath" readonly>
+  <button onclick="selectPath()" data-i18n="selectpath"></button>
+  <br></br>
+  <label for="projectpathexport" data-i18n="projectpathexport"></label>
+  <input type="text" id="projectpathexport" readonly>
+  <button onclick="selectExportPath()" data-i18n="selectpathexport"></button>
+  <br></br>
+
+  <h3 data-i18n="appearance"></h3>
+ 
+  <select id="darkmode">
+    <option value="yes" data-i18n="darkmode"></option>
+    <option value="no" data-i18n="lightmode"></option>
+  </select>
+  
+  <h3 data-i18n="language"></h3>
+  <select id="language">
+    <option value="PT_PT" data-i18n="portuguese"></option>
+    <option value="EN_EN" data-i18n="english"></option>
+  </select>
+  
+  <button onclick="updateConfig()" data-i18n="savebuttonconfig"></button>
+  <div id="status"></div>
+  <div id="settingspag" style="height: 950px; overflow: auto"></div>
+</div>
+
+
+<!-- Projects -->
+<div class="page" id="projects" style="overflow: auto">
+  <h1 data-i18n="visits"></h1>
+  <div class="outer-container">
+    <div class="container" style="display: table-cell; vertical-align: top;">
+      <div class="inner-container">
+        <div>
+          <p data-i18n="visitname"></p>
+          <input type="text" id="newprojectname" placeholder="Rua de São Marcos" required />
+        </div>
+        <div>
+          <p data-i18n="createvisit">
+          </p>
+          <button onclick="createproject()" data-i18n="create">
+          
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="display: table-cell; vertical-align: top; padding-left: 20px;">
+      <h2 data-i18n="recentvisit">
+      
+      </h2>
+      <div id="recentprojects"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- Project Editor -->
+<div class="page" id="projecteditor">
+  <div style="display: table; width: 100%; table-layout: fixed">
+    <div style="
+                        display: table-cell;
+                        vertical-align: top;
+                        width: 50px;
+                        vertical-align: middle;
+                      ">
+      <a href="#" onclick="showpage('projects'), reloadApp();">
+        <i class="fa fa-chevron-left" style="font-size: 30px"></i>
+
+      </a>
+    
+    </div>
+    <div style="display: table-cell; vertical-align: top">
+      <div style="font-size: 20px">
+        <i class="fa fa-briefcase" style="width: 20px"></i>
+        <input id="currentprojecttitle" style="
+                                display: inline-block;
+                                width: 300px;
+                                color: #cccccc;
+                                font-size: 20px;
+                                font-weight: normal;
+                                margin-bottom: 5px;
+                                border: none;
+                              " onkeyup="renamecurrentproject()" />
+      </div>
+      <p id="currentprojectdir" style="
+                          font-size: 12px;
+                          color: #eba576;
+                          font-style: italic;
+                        
+                        "></p>
+    </div>
+    <div style="
+                        display: table-cell;
+                        vertical-align: middle;
+                        width: 100px;
+                        text-align: right;
+                      ">
+      <div class="play-btn" style="margin: 0px; padding: 10px; font-size: 12px" id="currentprojectrunbutton">
+       
+      </div>
+    </div>
+  </div>
+  <div style="
+                  display: table;
+                  width: 100%;
+                  table-layout: fixed;
+                  margin-top: 30px;
+                ">
+    <div id="sidebar" style="
+                        display: table-cell;
+                        vertical-align: top;
+                        width: 200px;
+                        overflow-x: hidden;
+                      ">
+    <div class="editortab" onclick="showeditorc('panoramas')">
+      <i class="fa fa-camera" style="width: 20px"></i>
+      <span data-i18n="panoramas"> 
+      </span>
+    </div>
+    <div class="editortab" onclick="showeditorc('hotspots')">
+    <i class="fa fa-circle-thin" style="width: 20px"></i>
+    <span data-i18n="hotspots"></span>
+  </div>
+  <div class="editortab" onclick="showeditorc('imageassets')">
+    <i class="fa fa-image" style="width: 20px"></i>
+    <span data-i18n="imageassets"></span>
+  </div>
+  <div class="editortab" onclick="showeditorc('videos')">
+    <i class="fa fa-film" style="width: 20px"></i>
+    <span data-i18n="videos"></span>
+  </div>
+  <div class="editortab" onclick="showeditorc('audios')">
+    <i class="fa fa-music" style="width: 20px"></i>
+    <span data-i18n="audios"></span>
+  </div>
+  <div class="editortab" onclick="showeditorc('pdfs')">
+    <i class="fa fa-file-pdf-o" style="width: 20px"></i>
+    <span data-i18n="pdfs"></span>
+  </div>
+  <div class="editortab" onclick="showeditorc('settings')">
+    <i class="fa fa-cog" style="width: 20px"></i>
+    <span data-i18n="settings"></span>
+  </div>
+    </div>
+    <div style="display: table-cell; vertical-align: top; padding-left: 20px">
+      <div id="editorcontent" style="height: 1000px; overflow: auto"></div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- loading and alert dim -->
+<div id="dim">
+  <div style="display: table-cell; vertical-align: middle; text-align: center">
+    <div class="lds-hourglass" id="loading"></div>
+    <h3 id="dimmessage"></h3>
+  </div>
+</div>
+
+
+
+<!-- top menu dim -->
+<div id="topmenudim"></div>
+
+
+<!-- debug window -->
+<div id="debugwindow" style="display: none">
+  <div style="display: table; width: 100%; margin-bottom: 1em; font-size: 12px">
+    <div style="display: table-cell; vertical-align: middle">
+      Log Window
+    </div>
+    <div style="display: table-cell; vertical-align: middle; text-align: right">
+      <i class="fa fa-times" onclick="HideDebugWindow();"></i>
+    </div>
+  </div>
+  <div id="debugwindowcontent"></div>
+</div>
+<div style="position: fixed; right: 0; bottom: 0; padding: 10px">
+  <a href="https://www.mitmynid.com/" target="_blank"><img src="imgs/MMN_V_RGB.png" style="width: 64px" /></a>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+
+</html>

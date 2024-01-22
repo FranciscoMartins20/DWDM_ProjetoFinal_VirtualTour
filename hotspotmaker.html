@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title data-i18n="hotspot"></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+		
+		<!-- Insert this line above script imports  -->
+		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+		
+		<script src="resources/panotemplate/jquery.js"></script>
+		<script src="resources/panotemplate/three.min.js"></script>
+		<script src="resources/panotemplate/panolens.min.js"></script>
+		<script>
+			const { ipcRenderer } = require('electron');
+			const remote = require('electron').remote;
+			const fs = require("fs");
+			const fse = require("fs-extra");
+			
+		  </script>
+		<script src="app.js"></script>
+	
+	
+		
+		<!-- Insert this line after script imports -->
+		<script>if (window.module) module = window.module;</script>
+		
+		
+		
+		<style>
+			html, body {
+				margin: 0;
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				background-color: #000;
+				cursor: crosshair;
+			}
+
+			a:link, a:visited{
+				color: #bdc3c7;	
+			}
+
+			.fullwrapper{
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: black;
+			}
+			
+			#container {
+                width: 100%;
+                height: 100%;
+            }
+			
+		</style>
+	</head>
+	<body id="body">
+	    <div id="container"></div>
+		<div id="infospotloc" style="display: none;"></div>
+    	<div id="loading" class="fullwrapper" style="display: table; width: 100%; height: 100%;">
+    		<div style="display: table-cell; vertical-align: middle; text-align: center; color: white; font-size: 30px; padding: 50px;">
+    			<!--loadingtext--><p data-i18n="wait"></p><!--loadingtext-end-->
+    		</div>
+    	</div>
+		
+		
+		<!-- loading and alert dim -->
+		<div id="dim">
+			<div style="display: table-cell; vertical-align: middle; text-align: center;">
+				<h3 id="dimmessage"></h3>
+			</div>
+		</div>
+		
+		<div style="position: fixed; top: 0; left: 0; right: 0; text-align: center; padding: 20px; background-color: #2c3643;"><p data-i18n="addHotspotControl"></p>
+	  </div>
+
+    	<script>
+			
+            var container = document.querySelector( '#container' );
+            var viewer = new PANOLENS.Viewer( { 
+                container: container ,
+                controlBar: false,  
+                output: 'console' ,
+                autoHideInfospot: false,
+            } );
+			
+			viewer.addUpdateCallback(function(){});
+			
+			/*panoramas*/
+
+var fulldegreeseamlesspanoramaequirectangularsphericalprojectionnearvacationhomeautumneveningforestskyboxas138916388 = new PANOLENS.ImagePanorama( "temp/fulldegreeseamlesspanoramaequirectangularsphericalprojectionnearvacationhomeautumneveningforestskyboxas138916388.jpg" );
+viewer.add( fulldegreeseamlesspanoramaequirectangularsphericalprojectionnearvacationhomeautumneveningforestskyboxas138916388 );
+fulldegreeseamlesspanoramaequirectangularsphericalprojectionnearvacationhomeautumneveningforestskyboxas138916388.addEventListener('progress', function(e){
+$("#loading").show();
+});
+fulldegreeseamlesspanoramaequirectangularsphericalprojectionnearvacationhomeautumneveningforestskyboxas138916388.addEventListener('load', function(e){
+$("#loading").fadeOut();
+});
+fulldegreeseamlesspanoramaequirectangularsphericalprojectionnearvacationhomeautumneveningforestskyboxas138916388.addEventListener('click', function(e){
+});
+
+
+
+/*panoramas-end*/
+
+            
+		
+
+			
+			var hpos;
+			$("body").on("click", function(e){
+				if(e.ctrlKey){
+					console.log("Ctrl Pressed");
+					hpos = $("#infospotloc").html();
+					console.log("Hpos value: " + hpos);
+					if(hpos != "")
+						initHotspotDialog();
+				}
+			});
+		
+			function initHotspotDialog() {
+  $("#dimmessage").html(`
+    <div style='width: 70%; max-width: 400px; margin: 0 auto;'>
+      <div style='background-color: #2c3643; color: white; padding: 10px;'>
+        <i class='fa fa-info-circle'></i> ${i18next.t('titlehotspot')}
+      </div>
+      <div style='padding: 30px; background-color: #3d4855; font-size: 14px; font-weight: normal;'>
+        <div>
+          <p>${i18next.t('nameLabel')}</p>
+          <input placeholder='${i18next.t('nameLabel')}' id='hotspotname' style='margin: 0px; margin-bottom: 10px;'>
+        </div>
+        <button onclick='addTheHotspot()' style='margin: 5px;'>
+          <i class='fa fa-plus'></i> ${i18next.t('add')}
+        </button>
+        <button onclick=$('#dim').fadeOut() style='margin: 5px;'>
+          <i class='fa fa-times'></i> ${i18next.t('cancel')}
+        </button>
+      </div>
+    </div>
+  `);
+  $("#dim").show();
+}
+
+
+function addTheHotspot() {
+  var hotspotname = $("#hotspotname").val();
+  if (hotspotname == "") {
+    hotspotname = "Untitled";
+  }
+  console.log("Infospot New Location: " + hpos);
+  ipcRenderer.send("infospotlocationreceived", {
+    title: hotspotname,
+    position: hpos,
+  });
+  var window = remote.getCurrentWindow();
+  window.close();
+}
+
+$("#dim").fadeOut();
+        </script>
+	</body>
+</html>

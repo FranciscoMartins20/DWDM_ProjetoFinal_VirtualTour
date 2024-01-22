@@ -1,0 +1,19 @@
+
+  .settingstab {
+    border-bottom: 1px solid inherit;
+    padding: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.5s, color 0.5s;
+  }
+
+  .settingstab:hover {
+    background-color: inherit;
+    color: #6ba8d6;
+  }
+
+  .settingstab i {
+    margin-right: 8px;
+  }
+ 
+
